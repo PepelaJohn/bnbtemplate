@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - orina_network
+
+  backend:
+    build:
+      context: ./bnb-backend
+      dockerfile: Dockerfile
+    container_name: backend
+    depends_on:
+      - mongo
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/orina-apartments
+      - MONGO_USER=root
+      - MONGO_PASS=example
+    volumes:
+      - ./backend:/app/backend
+      - /app/backend/node_modules
+    networks:
+      - orina_network
+
+  frontend:
+    build:
+      context: ./bnb-frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules
+    networks:
+      - orina_network
+
+volumes:
+  mongo_data:
+
+networks:
+  orina_network:
+    driver: bridge

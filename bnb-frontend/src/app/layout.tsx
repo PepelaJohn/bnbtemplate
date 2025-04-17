@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-
-
+import { AuthProvider } from "@/context/AuthContext";
+import { ToastContainer } from 'react-toastify';
 export const metadata: Metadata = {
   title: "Winnie's Pastries",
   description: "Handmade pastries and cakes for every occasion",
@@ -46,8 +46,11 @@ export default function RootLayout({
       <body
         className="bg-gray-50"
       >
+        <AuthProvider>
         <Navbar></Navbar>
         {children}
+        <ToastContainer></ToastContainer>
+        </AuthProvider>
       </body>
     </html>
   );

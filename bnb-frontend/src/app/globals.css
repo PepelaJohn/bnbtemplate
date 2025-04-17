@@ -25,3 +25,14 @@ a {
 button{
   cursor: pointer;
 }
+
+/* Toast styles */
+.Toastify__toast {
+  @apply rounded-lg shadow-lg;
+}
+.Toastify__toast--success {
+  @apply bg-green-500;
+}
+.Toastify__toast--error {
+  @apply bg-red-500;
+}
