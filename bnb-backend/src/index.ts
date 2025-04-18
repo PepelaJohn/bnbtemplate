@@ -9,13 +9,14 @@ import { errorHandler } from "./middleware/errorHandler";
 // import { catchErrors } from "./utils/catchErrors";
 import authRoutes from "./routes/auth.route";
 import userRoutes from "./routes/user.route";
-import authenticate from "./middleware/authenticate";
+import authenticate, { authorize } from "./middleware/authenticate";
 import sessionROutes from "./routes/session.routes";
-
+import adminRoutes from './routes/admin.routes'
+import uploadRoutes from './routes/upload.route'
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.urlencoded({ limit: "20mb", extended: true }));
+app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(
   cors({
     credentials: true,
@@ -38,6 +39,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/users", authenticate, userRoutes);
 app.use("/api/sessions", authenticate, sessionROutes);
+app.use("/admin", authenticate, adminRoutes);
+app.use('/api', uploadRoutes)
 
 app.use(errorHandler);
 

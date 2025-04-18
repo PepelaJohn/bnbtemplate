@@ -1,15 +1,18 @@
 import axios from 'axios';
-import config from '../config/config';
-import Transaction from '../models/transaction.model';
-import { generateTransactionReference } from '../utils/payment.util';
+// import config from '../config/config';
+import Transaction from '../models/Transaction';
+// import { generateTransactionReference } from '../utils/payment.util';
 
-const authToken = Buffer.from(`${config.mpesa.consumerKey}:${config.mpesa.consumerSecret}`).toString('base64');
+// const authToken = Buffer.from(`${config.mpesa.consumerKey}:${config.mpesa.consumerSecret}`).toString('base64');
+
+
+
 
 export const getMpesaAuthToken = async () => {
   try {
     const response = await axios.get('https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials', {
       headers: {
-        Authorization: `Basic ${authToken}`
+        Authorization: `Basic UDdkWVVETEFDcE5tYXFBV2pFUEFXaXZlWGdWc25adkFHWGlzYzkxbnc1YVJRUURnOldKeEd5Qlc2VnU2Q3U5UmpHbzQ5WmFSRHI0OHd2VkdzSmlBaFdKamxHVzhpMUVkakVzS2gyMEl3Y3V6RGRmQ2w=`
       }
     });
     return response.data.access_token;

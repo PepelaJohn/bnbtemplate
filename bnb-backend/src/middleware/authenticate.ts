@@ -1,5 +1,5 @@
 import { NextFunction, RequestHandler, Response,  } from "express";
-import { catchErrors } from "../utils/catchErrors";
+import { catchErrors, CustomController } from "../utils/catchErrors";
 import { AppAssert } from "../utils/appAssert";
 import { FORBIDDEN, UNAUTHORIZED } from "../constants/http";
 import { accessTokenOptions, verifyToken } from "../utils/jwt";
@@ -19,10 +19,9 @@ const authenticate: RequestHandler = catchErrors(async (req,res, next) => {
 export default authenticate
 
 export const authorize = (roles: Role[]) => {
-  return (req:any, res: Response, next: NextFunction) => {
-    if (!roles.includes(req.role)) {
-      return res.status(FORBIDDEN).json({ message: 'Access denied' });
-    }
+   return catchErrors(async(req, res, next) => {
+    AppAssert(roles.includes(req.role), FORBIDDEN, "Access Denied")
+    
     next();
-  };
+  } )
 }

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-type CustomController = (
+export type CustomController = (
   req: Request,
   res: Response,
   next: NextFunction
