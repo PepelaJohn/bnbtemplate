@@ -26,6 +26,8 @@ export const getSessionHandler = catchErrors(async (req, res): Promise<any> => {
     }
   );
 
+
+
   AppAssert(
     foundSessions.length,
     BAD_REQUEST,
@@ -35,7 +37,7 @@ export const getSessionHandler = catchErrors(async (req, res): Promise<any> => {
   return res.status(OK).json(
     foundSessions.map((session) => ({
       ...session.toObject(),
-      ...(session._id.toString() === req.sessionId && {
+      ...((session._id as any).toString() === req.sessionId && {
         isCurrent: true,
       }),
     }))

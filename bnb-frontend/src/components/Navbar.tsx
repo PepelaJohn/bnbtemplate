@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Container from "./Container";
 import Link from "next/link";
 import { Menu, X, Search, User, ChevronDown } from "lucide-react";
+import { setNavigate } from "@/lib/navigation";
+import { useRouter } from "next/navigation";
 
 const navlinks = [
   "Book",
@@ -17,8 +19,9 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState('');
-
+  const navigate = useRouter()
   useEffect(() => {
+    setNavigate(navigate)
     setLocation(window.location.pathname);
     setActiveLink(window.location.pathname.split('/')[1] || '/');
     
