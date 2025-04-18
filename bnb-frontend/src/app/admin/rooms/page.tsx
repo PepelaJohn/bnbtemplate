@@ -1,3 +1,4 @@
+'use client'
 // --- app/admin/rooms/page.tsx ---
 import { useState } from 'react';
 import { Plus, Search, Filter, Edit, Trash, Home } from 'lucide-react';

@@ -1,72 +1,128 @@
-import React from "react";
+'use client'
+import React, { useEffect, useState } from "react";
 import Container from "./Container";
 import Link from "next/link";
-import UnderlineComponent from "./UnderlineComponent";
+import { Menu, X, Search, User, ChevronDown } from "lucide-react";
 
 const navlinks = [
-    "Book",
-    "Locations",
-    "Clients",
-    "Check in",
-    "Contact"
-]
+  "Book",
+  "Locations",
+  "Clients",
+  "Check in",
+  "Contact"
+];
 
 const Navbar = () => {
+  const [location, setLocation] = useState('');
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeLink, setActiveLink] = useState('');
+
+  useEffect(() => {
+    setLocation(window.location.pathname);
+    setActiveLink(window.location.pathname.split('/')[1] || '/');
+    
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
-    <div className="bog bg-white text-black h-[100px] !text-2xl max-lg:text-lg w-full  flex justify-between items-center">
-     <Container>
-     <div className="flex justify-between items-center w-full ">
-        <div className="flex items-center">
-          
-            <Link href='/' className=" overflow-hidden font-light">
-              <img src="/logo.png" alt="Logo" className="h-[70px] " />
-            </Link>
-          
-        </div>
-
-        <nav className="flex-grow flex justify-center gap-8 text-black">
-            {
-                navlinks.map((link)=>{
-                    return <UnderlineComponent className="uppercase" key={link} link={link} href={`/${link.split(" ").join("-").toLowerCase()}`}></UnderlineComponent>
-                })
-            }
-
-        </nav>
-
-        <div className="flex items-center space-x-3">
-          <div className=" rounded-full p-1 #541414">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="#000"
-              className="w-8 h-8 cursor-pointer"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+    <div 
+      className={`fixed z-50 top-0 left-0 right-0 w-full transition-all duration-300 ${
+        scrolled ? 'bg-white shadow-lg py-2' : 'bg-white/90 py-4'
+      } ${location.includes('admin') ? "hidden" : ""}`}
+    >
+      <Container>
+        <div className="flex justify-between items-center w-full relative">
+          {/* Logo */}
+          <div className="flex items-center z-20">
+            <Link href='/' className="overflow-hidden">
+              <img 
+                src="/bnb.png" 
+                alt="Logo" 
+                className={`transition-all duration-300 ${scrolled ? 'h-14' : 'h-16'}`} 
               />
-            </svg>
+            </Link>
           </div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-8 h-8 cursor-pointer"
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex justify-center gap-4 lg:gap-8">
+            {navlinks.map((link) => (
+              <Link 
+                href={`/${link.split(" ").join("-").toLowerCase()}`} 
+                key={link}
+                className={`relative uppercase font-medium tracking-wide text-lg hover:text-blue-600 transition-colors duration-300 px-2 py-1 overflow-hidden group ${
+                  activeLink === link.split(" ").join("-").toLowerCase() ? 'text-blue-600' : 'text-gray-800'
+                }`}
+              >
+                {link}
+                <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 transform transition-transform duration-300 ${
+                  activeLink === link.split(" ").join("-").toLowerCase() 
+                    ? 'scale-x-100' 
+                    : 'scale-x-0 group-hover:scale-x-100'
+                } origin-left`}></span>
+              </Link>
+            ))}
+          </nav>
+
+          {/* Action Buttons */}
+          <div className="flex items-center gap-2 z-20">
+            <button className="rounded-full p-2 hover:bg-gray-100 transition-colors duration-200">
+              <Search className="w-6 h-6 text-gray-700" />
+            </button>
+            <button className="rounded-full p-2 hover:bg-gray-100 transition-colors duration-200">
+              <User className="w-6 h-6 text-gray-700" />
+            </button>
+            
+            {/* Mobile Menu Button */}
+            <button 
+              className="md:hidden rounded-full p-2 hover:bg-gray-100 transition-colors duration-200"
+              onClick={toggleMobileMenu}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? 
+                <X className="w-6 h-6 text-gray-700" /> : 
+                <Menu className="w-6 h-6 text-gray-700" />
+              }
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          <div 
+            className={`absolute top-full left-0 right-0 bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${
+              mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
+            } overflow-hidden`}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-            />
-          </svg>
+            <div className="flex flex-col p-4 gap-4">
+              {navlinks.map((link) => (
+                <Link 
+                  href={`/${link.split(" ").join("-").toLowerCase()}`} 
+                  key={link}
+                  className={`py-3 px-4 uppercase font-medium text-lg border-b border-gray-100 ${
+                    activeLink === link.split(" ").join("-").toLowerCase() 
+                      ? 'text-blue-600 border-blue-600' 
+                      : 'text-gray-800'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-     </Container>
+      </Container>
+      
+      {/* Animation effect at the bottom of navbar */}
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
     </div>
   );
 };

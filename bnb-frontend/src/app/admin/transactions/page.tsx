@@ -1,3 +1,4 @@
+'use client'
 // --- app/admin/transactions/page.tsx ---
 import { useState } from 'react';
 import { Search, Filter, Download, ArrowUpRight, CreditCard, Banknote, Check, Clock } from 'lucide-react';

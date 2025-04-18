@@ -6,19 +6,22 @@ import { z } from "zod";
 import { MongooseError } from "mongoose";
 export const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
   console.log(error);
- 
 
   if (error instanceof AppError) {
-    return res.status(error.statusCode).json(error.message);
+    res.status(error.statusCode).json(error.message);
+    return next();
   }
 
   if (error instanceof z.ZodError) {
-    return res.status(BAD_REQUEST).json(error.issues);
+    res.status(BAD_REQUEST).json(error.issues);
+    return next();
   }
 
-  if(error instanceof MongooseError){
-    return res.status(BAD_GATEWAY).json(error.message)
+  if (error instanceof MongooseError) {
+    res.status(BAD_GATEWAY).json(error.message);
+    return next();
   }
 
   res.status(INTERNAL_SERVER_ERROR).json({ message: "Internal Server Error!!" });
+  return next();
 };

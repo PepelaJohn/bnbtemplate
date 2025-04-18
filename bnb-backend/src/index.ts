@@ -36,7 +36,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use("/api/auth", authRoutes);
-app.use("/api/user", authenticate, userRoutes);
+app.use("/api/users", authenticate, userRoutes);
 app.use("/api/sessions", authenticate, sessionROutes);
 
 app.use(errorHandler);

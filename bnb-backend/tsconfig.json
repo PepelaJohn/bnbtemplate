@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES2020",
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "module": "CommonJS",
     "strict": true,
     "esModuleInterop": true,
@@ -8,7 +9,10 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "allowUnusedLabels": true,
+    "noEmitOnError": true,   
+    
   },
   "include": [
     "src/**/*.ts"

@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-
+import {webname} from '../constants/index';
 export type PaymentMethod = 'mpesa' | 'stripe' | 'cash';
 export type BookingStatus = 'pending' | 'confirmed' | 'cancelled' | 'completed';
 
@@ -38,7 +38,7 @@ const bookingSchema = new Schema<IBooking>({
 // Generate receipt code before saving
 bookingSchema.pre<IBooking>('save', function(next) {
   if (!this.receiptCode) {
-    this.receiptCode = `ORINA-${Date.now().toString(36).toUpperCase()}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
+    this.receiptCode = `${webname}-${Date.now().toString(36).toUpperCase()}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
   }
   next();
 });

@@ -1,3 +1,4 @@
+//jwt.ts
 import mongoose from "mongoose";
 import { JWT_ACESS_SECRET, JWT_REFRESH_SECRET } from "../constants/env";
 import Audience from "../constants/audience";
@@ -15,12 +16,12 @@ export type AccessTokenPayload = {
 
 export const refreshTokenOptions = {
   secret: JWT_REFRESH_SECRET,
-  expiresIn: "30d",
+  expiresIn: "30d"  as jwt.SignOptions["expiresIn"],
   audience: [Audience.User],
 };
 export const accessTokenOptions = {
   secret: JWT_ACESS_SECRET,
-  expiresIn: "15m",
+  expiresIn: "15m" as jwt.SignOptions["expiresIn"],
   audience: [Audience.User],
 };
 

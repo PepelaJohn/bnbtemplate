@@ -8,6 +8,7 @@ export interface UserDocument extends mongoose.Document {
   verified: boolean;
   updatedAt: Date;
   createdAt: Date;
+  name:string;
   phone: string;
   role: "guest" | "admin" | "super_admin";
   isActive: boolean;
@@ -22,10 +23,12 @@ export interface UserDocument extends mongoose.Document {
 const userSchema = new mongoose.Schema<UserDocument>(
   {
     username: { type: String },
+    name:{type:String, required:true},
     email: { type: String, required: true },
     password: { type: String, required: true, min: 6, max: 255 },
     verified: { type: Boolean, required: true, default: false },
     role: {
+      
       type: String,
       enum: ["guest", "admin", "super_admin"],
       default: "guest",

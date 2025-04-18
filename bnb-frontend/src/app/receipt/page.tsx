@@ -1,6 +1,7 @@
 // app/booking/receipt/page.tsx
 import Link from 'next/link';
 import { CheckCircle, Download, Home, Calendar, CreditCard, User, ChevronRight } from 'lucide-react';
+import { webname } from '@/constants';
 
 export default function ReceiptPage() {
   // Enhanced mock receipt data
@@ -150,8 +151,8 @@ export default function ReceiptPage() {
 
         {/* Help Text */}
         <div className="mt-6 text-center text-gray-600">
-          <p>If you have any questions about your booking, please contact us at <a href="mailto:support@orinaapartments.com" className="text-blue-600 hover:underline">support@orinaapartments.com</a></p>
-          <p className="mt-2">Thank you for choosing Orina Apartments!</p>
+          <p>If you have any questions about your booking, please contact us at <a href="mailto:support@{webname.toLowerCase()}.com" className="text-blue-600 hover:underline">support@{webname.toLowerCase()}.com</a></p>
+          <p className="mt-2">Thank you for choosing {webname}!</p>
         </div>
       </div>
     </div>

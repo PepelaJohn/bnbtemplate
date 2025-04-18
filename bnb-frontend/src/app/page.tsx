@@ -1,11 +1,12 @@
+import HomePage from '@/components/Home'
 import React from 'react'
 
 const Home = () => {
   return (
-    <section className='min-h-screen'>
-        
+    <>
+        <HomePage></HomePage>
 
-    </section>
+    </>
   )
 }
 

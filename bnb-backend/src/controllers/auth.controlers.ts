@@ -37,7 +37,7 @@ export const loginHandler = catchErrors(async (req, res): Promise<any> => {
 
   return setAuthCookies(res, accessToken, refreshToken)
     .status(OK)
-    .json({ message: "Login success", user });
+    .json( user);
 });
 
 export const logoutHandler = catchErrors(async (req, res): Promise<any> => {

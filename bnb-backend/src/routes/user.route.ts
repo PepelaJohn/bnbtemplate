@@ -5,6 +5,6 @@ import { getUserHandler } from "../controllers/user.controller";
 const userRoutes = Router();
 
 // prefix: /user
-userRoutes.get("/", getUserHandler);
+userRoutes.get("/me", getUserHandler);
 
 export default userRoutes;

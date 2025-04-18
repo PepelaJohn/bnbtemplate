@@ -36,3 +36,7 @@ button{
 .Toastify__toast--error {
   @apply bg-red-500;
 }
+
+.nav-height{
+  height: calc(100vh - 100px);
+}

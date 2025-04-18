@@ -2,11 +2,13 @@
   "name": "bnbtemplate",
   "version": "1.0.0",
   "main": "index.js",
-
-  "scripts": {
-    "dev": "cd bnb-frontend && npm run dev"
-  },
+ "scripts": {
+  "dev": "concurrently \"npm run dev --prefix bnb-frontend\" \"npm run dev --prefix bnb-backend\""
+},
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
 }

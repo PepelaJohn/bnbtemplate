@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react';
 import { Search, Filter, Plus, Check, Clock, X } from 'lucide-react';
 import Card from '@/components/ui/Card';

@@ -21,6 +21,8 @@ export type UserProps = {
   email: string;
   password: string;
   userAgent?: string;
+  name:string;
+  phone: string;
 };
 export const CreateUser = async (data: UserProps) => {
   const existingUser = await User.exists({
@@ -28,10 +30,14 @@ export const CreateUser = async (data: UserProps) => {
   });
 
   AppAssert(!existingUser, CONFLICT, "Email already in use", CONFLICT);
-
+  console.log(data)
   const user = await User.create({
     email: data.email,
     password: data.password,
+    phone: data.phone,
+    username: data.username,
+    name:data.name,
+
   });
 
   const userId = user._id;
@@ -48,6 +54,7 @@ export const CreateUser = async (data: UserProps) => {
   const session = await Session.create({
     userId,
     userAgent: data.userAgent,
+    role: user.role,
   });
 
   const refreshToken :string = signToken(
@@ -60,6 +67,7 @@ export const CreateUser = async (data: UserProps) => {
     {
       userId: user._id as mongoose.Types.ObjectId,
       sessionId: session._id as mongoose.Types.ObjectId,
+      role: user.role,
     },
     accessTokenOptions
   );
@@ -81,7 +89,13 @@ export const loginuser = async (data: LoginParams) => {
   const { email, password, userAgent } = data;
   
 
-  const foundUser = await User.findOne({ email });
+  const foundUser = await User.findOne({
+    $or: [
+      { email: email },
+      { username: email }
+    ]
+  });
+  
 
   AppAssert(foundUser, UNAUTHORIZED, "Invalid email or password");
 
@@ -119,10 +133,12 @@ export const refreshAcessToken = async (refreshToken: string) => {
   const { payload, error } = verifyToken(refreshToken, refreshTokenOptions);
   AppAssert(payload, UNAUTHORIZED, error || "Invalid refresh Token");
 
-  const session = await Session.findById(payload.sessionId);
+  const session = await Session.findById(payload.sessionId).populate('userId');
+
+  
 
   AppAssert(
-    session && session.expiresAt.getTime() > Date.now(),
+    session && session.expiresAt.getTime() > Date.now()  && (session.userId as any).role,
     UNAUTHORIZED,
     "Session Expired"
   );
@@ -131,6 +147,7 @@ export const refreshAcessToken = async (refreshToken: string) => {
     {
       sessionId: session._id as mongoose.Types.ObjectId,
       userId: session.userId,
+      role: (session.userId as any).role,
     },
     accessTokenOptions
   );

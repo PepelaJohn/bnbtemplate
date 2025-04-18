@@ -1,3 +1,4 @@
+'use client'
 // --- app/admin/users/page.tsx ---
 import { useState } from 'react';
 import { Search, Plus, User, Edit, Trash, Key } from 'lucide-react';
