@@ -5,7 +5,7 @@ export interface ILog extends Document {
   entity: string;
   entityId: mongoose.Types.ObjectId;
   performedBy: mongoose.Types.ObjectId;
-  metadata?: any;
+  metadata?: { old: any, new:any } | null;
 }
 
 const logSchema = new Schema<ILog>({

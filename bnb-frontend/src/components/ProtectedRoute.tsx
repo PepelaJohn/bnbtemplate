@@ -52,7 +52,7 @@ const ProtectedRoute = ({
 }: ProtectedRouteProps) => {
   const { user, loading, isAuthenticated, isAdmin, isSuperAdmin } = useAuth();
   const router = useRouter();
-
+console.log(isAdmin, adminOnly)
   useEffect(() => {
     // Give a small delay to prevent flash of loading state for quick authentications
     const redirectTimer = setTimeout(() => {

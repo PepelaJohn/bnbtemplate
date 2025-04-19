@@ -13,6 +13,7 @@ import authenticate, { authorize } from "./middleware/authenticate";
 import sessionROutes from "./routes/session.routes";
 import adminRoutes from './routes/admin.routes'
 import uploadRoutes from './routes/upload.route'
+import apartmentRoutes from './routes/apartments.route'
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
@@ -36,6 +37,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+app.use('/api/apartments', apartmentRoutes)
 app.use("/api/auth", authRoutes);
 app.use("/api/users", authenticate, userRoutes);
 app.use("/api/sessions", authenticate, sessionROutes);

@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 const navlinks = [
   "Book",
-  "Locations",
+  "Apartments",
   "Clients",
   "Check in",
   "Contact"

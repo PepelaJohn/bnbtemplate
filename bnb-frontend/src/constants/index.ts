@@ -16,6 +16,10 @@ export const catchErrors = (controlFunction: CustomFunction) => {
   };
 };
 
+export const optimizeImage = (url: string, width = 800) => {
+  return url ? url.replace("/upload/", `/upload/w_${width},f_auto,q_auto/`):"/images/placeholder.png";
+};
+
 
 export // Country codes data
 const countryCodes = [

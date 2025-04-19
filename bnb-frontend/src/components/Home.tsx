@@ -65,7 +65,7 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              href="/admin"
+              href="/apartments"
               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-md font-medium transition duration-300 flex items-center"
             >
               Browse Apartments <ArrowRight className="ml-2 h-5 w-5" />

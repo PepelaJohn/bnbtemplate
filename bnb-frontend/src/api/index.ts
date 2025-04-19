@@ -3,6 +3,8 @@ import { catchErrors } from "@/constants";
 import { navigate } from "@/lib/navigation";
 import axios, { AxiosInstance } from "axios";
 
+
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 if (!BASE_URL) {
   throw new Error(
@@ -107,7 +109,16 @@ export const resetPassword = async ({
   password: string;
 }) =>
   ApiInstance.post("api/auth/password/reset", { verificationCode, password });
-
+export const uploadImage = async(formData:FormData) => ApiInstance.post("api/upload-multiple", formData,{
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },                        
+} )
 export const getUser = async () => ApiInstance.get("api/users/me");
 export const getSessions = async () => ApiInstance.get("api/sessions");
 export const deleteSession = async (id:string) => ApiInstance.delete(`api/sessions/${id}`);
+export const getApartments = async()=>ApiInstance.get('/api/apartments')
+export const createApartment  = async(formData:Partial<Appartment>)=>ApiInstance.post("/api/apartments", formData)
+export const updateApartment  = async( id:string,formData:Partial<Appartment>,)=>ApiInstance.patch(`/api/apartments/${id}`, formData)
+export const deleteApartment  = async(id:string)=>ApiInstance.delete(`/api/apartments/${id}`)
+export const getApartment  = async(id:string):Promise<Appartment>=>ApiInstance.get(`/api/apartments/${id}`)

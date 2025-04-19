@@ -11,9 +11,11 @@ const useAuth = (opts = {}) => {
     staleTime: Infinity,
     ...opts,
   });
+
+
   const isAuthenticated = !!user;
-  const isAdmin = user?.data?.role === "admin";
-  const isSuperAdmin = user?.data?.role === "super_admin";
+  const isAdmin = user?.role === "admin";
+  const isSuperAdmin = user?.role === "super_admin";
   return {
     user,
     loading: isLoading,
